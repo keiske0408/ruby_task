@@ -25,24 +25,90 @@ people.each do |person|
   puts person
 end
 
-puts "Enter national ID to edit: "
-ni = gets.chomp
+while true
+  puts " "
+  puts "select an option: add/delete/exit/search/edit: "
+  option = gets.chomp.to_s.downcase
+  case option
+  when "delete"
+    puts "enter national id: "
+    ni = gets.chomp
 
-person_to_edit = people.find { |person| person[:national_id] == ni }
+    index_to_delete = people.find_index { |person| person[:national_id] == ni }
 
-if person_to_edit
-  puts "Editing user: #{person_to_edit}"
-  puts "Enter new name (leave blank to keep '#{person_to_edit[:name]}'): "
-  new_name = gets.chomp
-  puts "Enter new age (leave blank to keep '#{person_to_edit[:age]}'): "
-  new_age = gets.chomp
+    if index_to_delete.nil?
+      puts "ID not found."
+    else
+      people.delete_at(index_to_delete)
+      puts people
+      puts "Successfully deleted."
+    end
 
-  # Update the person's details if new values are provided
-  person_to_edit[:name] = new_name unless new_name.empty?
-  person_to_edit[:age] = new_age.to_i unless new_age.empty?
+  when "add"
+    puts "Add a national ID: "
+    national_id = gets.chomp
+    puts "Input name: "
+    input_name = gets.chomp
+    puts "Age: "
+    age = gets.chomp.to_i
 
-  puts people
-  puts "User updated successfully."
-else
-  puts "ID not found."
+    hash_insert = { national_id: national_id, name: input_name, age: age }
+
+    if people.any? { |person| person[:national_id] == national_id }
+      puts "Failed to add: National ID already exists."
+    else
+      people.unshift(hash_insert)
+      puts people
+      puts "User added successfully."
+    end
+  when "search"
+    puts "\nSearch a user by national ID or name: "
+    input = gets.chomp.downcase
+
+    search = people.find do |person|
+      person[:national_id].downcase == input || person[:name].downcase == input
+
+    end
+    if search
+      puts search
+    else
+      puts "User not found."
+    end
+  when "edit"
+    puts "Enter national ID to edit: "
+    ni = gets.chomp
+
+    person_to_edit = people.find { |person| person[:national_id] == ni }
+
+    if person_to_edit
+      puts "Editing user: #{person_to_edit}"
+      puts "Enter new name (leave blank to keep '#{person_to_edit[:name]}'): "
+      new_name = gets.chomp
+      puts "Enter new age (leave blank to keep '#{person_to_edit[:age]}'): "
+      new_age = gets.chomp
+
+      # Update the person's details if new values are provided
+      person_to_edit[:name] = new_name unless new_name.empty?
+      person_to_edit[:age] = new_age.to_i unless new_age.empty?
+
+      puts people
+      puts "User updated successfully."
+    else
+      puts "ID not found."
+    end
+  when "exit"
+    puts "Exiting the program."
+    puts "Are you sure you want to exit (y/n)?"
+    answer = gets.chomp.downcase
+    if answer == "y"
+      puts "Exiting now..."
+      break
+    else
+      puts "Continuing..."
+    end
+
+
+  else
+    puts "Invalid option. Please select 'add', 'delete', or 'exit'.,'edit','search'"
+  end
 end
