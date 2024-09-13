@@ -25,15 +25,24 @@ people.each do |person|
   puts person
 end
 
-puts "\nSearch a user by national ID or name: "
-input = gets.chomp.downcase
+puts "Enter national ID to edit: "
+ni = gets.chomp
 
-search = people.find do |person|
-  person[:national_id].downcase == input || person[:name].downcase == input
-end
+person_to_edit = people.find { |person| person[:national_id] == ni }
 
-if search
-  puts search
+if person_to_edit
+  puts "Editing user: #{person_to_edit}"
+  puts "Enter new name (leave blank to keep '#{person_to_edit[:name]}'): "
+  new_name = gets.chomp
+  puts "Enter new age (leave blank to keep '#{person_to_edit[:age]}'): "
+  new_age = gets.chomp
+
+  # Update the person's details if new values are provided
+  person_to_edit[:name] = new_name unless new_name.empty?
+  person_to_edit[:age] = new_age.to_i unless new_age.empty?
+
+  puts people
+  puts "User updated successfully."
 else
-  puts "User not found."
+  puts "ID not found."
 end
