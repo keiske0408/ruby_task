@@ -24,50 +24,6 @@ people = [
 people.each do |person|
   puts person
 end
-while true
-  puts " "
-  puts "select an option: add/delete/exit: "
-  option = gets.chomp.to_s.downcase
-  case option
-  when "delete"
-    puts "enter national id: "
-    ni = gets.chomp
-
-    index_to_delete = people.find_index { |person| person[:national_id] == ni }
-
-    if index_to_delete.nil?
-      puts "ID not found."
-    else
-      people.delete_at(index_to_delete)
-      puts people
-      puts "Successfully deleted."
-    end
-
-  when "add"
-    puts "Add a national ID: "
-    national_id = gets.chomp
-    puts "Input name: "
-    input_name = gets.chomp
-    puts "Age: "
-    age = gets.chomp.to_i
-
-    hash_insert = { national_id: national_id, name: input_name, age: age }
-
-    if people.any? { |person| person[:national_id] == national_id }
-      puts "Failed to add: National ID already exists."
-    else
-      people.push(hash_insert)
-      puts people
-      puts "User added successfully."
-    end
-  when "exit"
-    puts "Exiting the program."
-    break
-
-  else
-    puts "Invalid option. Please select 'add', 'delete', or 'exit'."
-  end
-end
 
 
 
