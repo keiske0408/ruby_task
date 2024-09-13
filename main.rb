@@ -21,7 +21,6 @@ people = [
   { national_id: 'ID020', name: 'Tina Young', age: 60 }
 ]
 
-# Print the entire list of people
 people.each do |person|
   puts person
 end
@@ -34,7 +33,6 @@ if option == "delete"
   puts "enter national id: "
   ni = gets.chomp
 
-  # id_check = people.any? { |person| person[:national_id] == ni }
   index_to_delete = people.find_index { |person| person[:national_id] == ni }
 
   if index_to_delete.nil?
