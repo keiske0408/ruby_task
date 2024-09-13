@@ -26,32 +26,45 @@ people.each do |person|
   puts person
 end
 
-# input your data
 puts " "
-puts "Add a national ID: "
-national_id = gets.chomp
-puts "Input name: "
-input_name = gets.chomp
-puts "Age: "
-age = gets.chomp.to_i
+puts "select an option: add/delete: "
+option = gets.chomp.to_s.downcase
 
-hash_insert = { national_id: "#{national_id}", name: "#{input_name}", age: "#{age}" }
+if option == "delete"
+  puts "enter national id: "
+  ni = gets.chomp
 
-# check if its duplicate
-id_exists = people.any? { |person| person[:national_id] == national_id }
+  # id_check = people.any? { |person| person[:national_id] == ni }
+  index_to_delete = people.find_index { |person| person[:national_id] == ni }
 
-# final conditions
-if id_exists
-  puts "Failed to add: National ID already exists."
-else
-  # Add the new person to the array
-  people.push(hash_insert)
-
-  # Print the updated list of people
-  people.each do |person|
-    puts person
+  if index_to_delete.nil?
+    puts "ID not found."
+  else
+    people.delete_at(index_to_delete)
+    puts people
+    puts "Successfully deleted."
   end
-  puts "User added successfully"
+
+else
+  if option == "add"
+    puts "Add a national ID: "
+    national_id = gets.chomp
+    puts "Input name: "
+    input_name = gets.chomp
+    puts "Age: "
+    age = gets.chomp.to_i
+
+    hash_insert = { national_id: national_id, name: input_name, age: age }
+
+    if people.any? { |person| person[:national_id] == national_id }
+      puts "Failed to add: National ID already exists."
+    else
+      people.push(hash_insert)
+      puts people
+      puts "User added successfully."
+    end
+
+  end
 end
 
 
