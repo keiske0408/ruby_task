@@ -24,27 +24,26 @@ people = [
 people.each do |person|
   puts person
 end
+while true
+  puts " "
+  puts "select an option: add/delete/exit: "
+  option = gets.chomp.to_s.downcase
+  case option
+  when "delete"
+    puts "enter national id: "
+    ni = gets.chomp
 
-puts " "
-puts "select an option: add/delete: "
-option = gets.chomp.to_s.downcase
+    index_to_delete = people.find_index { |person| person[:national_id] == ni }
 
-if option == "delete"
-  puts "enter national id: "
-  ni = gets.chomp
+    if index_to_delete.nil?
+      puts "ID not found."
+    else
+      people.delete_at(index_to_delete)
+      puts people
+      puts "Successfully deleted."
+    end
 
-  index_to_delete = people.find_index { |person| person[:national_id] == ni }
-
-  if index_to_delete.nil?
-    puts "ID not found."
-  else
-    people.delete_at(index_to_delete)
-    puts people
-    puts "Successfully deleted."
-  end
-
-else
-  if option == "add"
+  when "add"
     puts "Add a national ID: "
     national_id = gets.chomp
     puts "Input name: "
@@ -61,9 +60,15 @@ else
       puts people
       puts "User added successfully."
     end
+  when "exit"
+    puts "Exiting the program."
+    break
 
+  else
+    puts "Invalid option. Please select 'add', 'delete', or 'exit'."
   end
 end
+
 
 
 
