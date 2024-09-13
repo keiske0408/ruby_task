@@ -25,7 +25,15 @@ people.each do |person|
   puts person
 end
 
+puts "\nSearch a user by national ID or name: "
+input = gets.chomp.downcase
 
+search = people.find do |person|
+  person[:national_id].downcase == input || person[:name].downcase == input
+end
 
-
-
+if search
+  puts search
+else
+  puts "User not found."
+end
