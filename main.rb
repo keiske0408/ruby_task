@@ -61,20 +61,20 @@ end
 
 def edit_person(people)
   print "Enter national ID to edit: "
-  ni = gets.chomp
+  national_id = gets.chomp
 
-  person_to_edit = people.find { |person| person[:national_id] == ni }
+  person = people.find { |person| person[:national_id] == national_id }
 
-  if person_to_edit
-    print "Editing user: #{person_to_edit}"
-    print "Enter new name (leave blank to keep '#{person_to_edit[:name]}'): "
+  if person
+    print "Editing user: #{person}"
+    print "Enter new name (leave blank to keep '#{person[:name]}'): "
     new_name = gets.chomp
-    print "Enter new age (leave blank to keep '#{person_to_edit[:age]}'): "
+    print "Enter new age (leave blank to keep '#{person[:age]}'): "
     new_age = gets.chomp
 
     # Update the person's details if new values are provided
-    person_to_edit[:name] = new_name unless new_name.empty?
-    person_to_edit[:age] = new_age.to_i unless new_age.empty?
+    person[:name] = new_name unless new_name.empty?
+    person[:age] = new_age.to_i unless new_age.empty?
 
     puts people
     puts "User updated successfully."
