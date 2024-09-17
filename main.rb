@@ -108,6 +108,8 @@ while true
     delete_person(people)
   when "search"
     search_person(people)
+  when "edit"
+    edit_person(people)
   when "exit"
     exit_program
   else
