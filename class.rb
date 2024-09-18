@@ -32,10 +32,8 @@ class Person
   def self.find_id
     print "\nSearch a user by national ID or name: "
     input = gets.chomp.downcase
-
     search = @@records.find do |person|
       person[:national_id].downcase == input || person[:name].downcase == input
-
     end
     if search
       puts search
